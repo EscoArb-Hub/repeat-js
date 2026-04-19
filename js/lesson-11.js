@@ -181,3 +181,4 @@ const result22 = arrayAll(array1, array2, toLowerCase2, toUpperCase2)
 console.log("result22:", result22)  //["a1", "b1", "c1", "A2", "B2", "C2" ]
 
 
+
