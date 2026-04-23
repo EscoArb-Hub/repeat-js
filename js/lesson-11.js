@@ -96,23 +96,23 @@ const array2 = ["a2", "b2", "c2"]
 // поєднати array1 та array2 в arrayAll
 
 // todo - 1
-function arrayAll(arr1, arr2, callback1, callback2) {
-    // callback1 це toLowerCase
-    // callback2 це toUpperCase
-    // arr1 це array1
-    // arr2 це array2
+// function arrayAll(arr1, arr2, callback1, callback2) {
+//     // callback1 це toLowerCase
+//     // callback2 це toUpperCase
+//     // arr1 це array1
+//     // arr2 це array2
 
-    const result1 = callback1(arr1)
-    console.log("result1:", result1)
-    const result2 = callback2(arr2)
-    console.log("result2:", result2)
+//     const result1 = callback1(arr1)
+//     console.log("result1:", result1)
+//     const result2 = callback2(arr2)
+//     console.log("result2:", result2)
 
-    const arrayAll = result1.concat(result2)
-    return arrayAll
-}
+//     const arrayAll = result1.concat(result2)
+//     return arrayAll
+// }
 
 // function toUpperCase1(arr) {
-//     // console.log("вхідний масив:", arr) 
+//     // console.log("вхідний масив:", arr)
 //     const resultJoin = arr.join(" ")
 //     // console.log("resultJoin:", resultJoin)
 
@@ -130,7 +130,7 @@ function arrayAll(arr1, arr2, callback1, callback2) {
 // function toLowerCase1(arr) {
 //     const resultJoin = arr.join(" ")
 //     // console.log("resultJoin:", resultJoin)
-    
+
 //     const resultToLower = resultJoin.toLowerCase()
 //     // console.log("resultToLower:", resultToLower)
 
@@ -151,34 +151,70 @@ function arrayAll(arr1, arr2, callback1, callback2) {
 // todo - 2
 
 
-function toUpperCase2(arr) {
-    const resultUpp = [];
-    for (const item of arr) {
-        resultUpp.push(item.toUpperCase())
-    }
-    console.log("resultUpp:", resultUpp)
-    return resultUpp
-}
+// function toUpperCase2(arr) {
+//     const resultUpp = [];
+//     for (let item of arr) {
+//         resultUpp.push(item.toUpperCase())
+//     }
+//     console.log("resultUpp:", resultUpp)
+//     return resultUpp
+// }
+
+// // const result2 = toUpperCase(array2)
+// // console.log("result2:", result2)
+
+// function toLowerCase2(arr) {
+//     const resultLow = [];
+//     for (const item of arr) {
+//         resultLow.push(item.toLowerCase())
+//     }
+//     console.log("resultLow:", resultLow)
+
+//     return resultLow
+// }
+
+// // const result3 = toLowerCase(array1)
+// // console.log("result3:", result3)
+
+
+// function arrayAll(arr1, arr2, callback1, callback2) {
+//     // callback1 це toLowerCase
+//     // callback2 це toUpperCase
+//     // arr1 це array1
+//     // arr2 це array2
+
+//     const result1 = callback1(arr1)
+//     console.log("result1:", result1)
+//     const result2 = callback2(arr2)
+//     console.log("result2:", result2)
+
+//     const arrayAll = result1.concat(result2)
+//     return arrayAll
+// }
+
+
+// const result22 = arrayAll(array1, array2, toLowerCase2, toUpperCase2)
+// console.log("result22:", result22)  //["a1", "b1", "c1", "A2", "B2", "C2" ]
+
+
+// todo - 3
+
+
+const toUpperCase2 = arr => arr.map(item => item.toUpperCase()) 
 
 // const result2 = toUpperCase(array2)
 // console.log("result2:", result2)
 
-function toLowerCase2(arr) {
-    const resultLow = [];
-    for (const item of arr) {
-        resultLow.push(item.toLowerCase())
-    }
-    console.log("resultLow:", resultLow)
-
-    return resultLow
-}
+const toLowerCase2 = arr => arr.map(item => item.toLowerCase())
 
 // const result3 = toLowerCase(array1)
 // console.log("result3:", result3)
 
 
+const arrayAll = (arr1, arr2, callback1, callback2) => 
+    callback1(arr1).concat(callback2(arr2))
+
+
+
 const result22 = arrayAll(array1, array2, toLowerCase2, toUpperCase2)
 console.log("result22:", result22)  //["a1", "b1", "c1", "A2", "B2", "C2" ]
-
-
-
