@@ -218,3 +218,56 @@ const arrayAll = (arr1, arr2, callback1, callback2) =>
 
 const result22 = arrayAll(array1, array2, toLowerCase2, toUpperCase2)
 console.log("result22:", result22)  //["a1", "b1", "c1", "A2", "B2", "C2" ]
+
+
+
+
+
+
+
+// function toUpperCase2(arr) {
+//     const resultUpp = [];
+//     for (let item of arr) {
+//         resultUpp.push(item.toUpperCase())
+//     }
+//     console.log("resultUpp:", resultUpp)
+//     return resultUpp
+// }
+
+// // const result2 = toUpperCase(array2)
+// // console.log("result2:", result2)
+
+// function toLowerCase2(arr) {
+//     const resultLow = [];
+//     for (const item of arr) {
+//         resultLow.push(item.toLowerCase())
+//     }
+//     console.log("resultLow:", resultLow)
+
+//     return resultLow
+// }
+
+// // const result3 = toLowerCase(array1)
+// // console.log("result3:", result3)
+
+
+// function arrayAll(arr1, arr2, callback1, callback2) {
+//     // callback1 це toLowerCase
+//     // callback2 це toUpperCase
+//     // arr1 це array1
+//     // arr2 це array2
+
+//     const result1 = callback1(arr1)
+//     console.log("result1:", result1)
+//     const result2 = callback2(arr2)
+//     console.log("result2:", result2)
+
+//     const arrayAll = result1.concat(result2)
+//     return arrayAll
+// }
+
+
+// const result22 = arrayAll(array1, array2, toLowerCase2, toUpperCase2)
+// console.log("result22:", result22)  //["a1", "b1", "c1", "A2", "B2", "C2" ]
+
+// перетворити дз-2 на об'єкт
