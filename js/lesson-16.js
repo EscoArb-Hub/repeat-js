@@ -1520,11 +1520,382 @@ console.log("indexPlane:", indexPlane.indexOf(1926))
 
 
 
-const indexPlaneMetodSome = aircrafts.some(airCraft => airCraft.info.year === 1926)
+const indexPlaneMetodSome = aircrafts.some(airCraft => airCraft.info.year <= 1926)
 console.log("indexPlaneMetodSome:", indexPlaneMetodSome,)
 
-const indexPlane1926 = aircrafts.findIndex(airCraft => airCraft.info.year === 1926)
+const indexPlane1926 = aircrafts.findIndex(airCraft => airCraft.info.year <= 1926)
 console.log("indexPlane1926:", indexPlane1926,)
 
 
 
+//! Масив об'єктів
+console.warn("Масив об'єктів:");
+//? ✴️ Під час роботи з масивом об'єктів перевіряється
+//? значення певної їх властивості.
+//? ✳️ Наприклад, у нас є масив об'єктів фруктів,
+//? необхідно дізнатися, чи є ВСІ фрукти в наявності
+//? та чи є в наявності хоча б ЯКІСЬ фрукти,
+//? тобто більше 0 штук.
+const fruits = [
+    { name: "apples", amount: 100 },
+    { name: "bananas", amount: 0 },
+    { name: "grapes", amount: 50 },
+];
+console.log("fruits:", fruits);
+console.log("`  `  `  `  `  `  `  `  `  `  `  `  `  `  `  `  `  `  `");
+
+//todo:  every поверне true тільки, якщо усіх фруктів буде більше 0 штук:
+const allAvailable = fruits.every(fruit => fruit.amount > 0);
+console.log("allAvailable:", allAvailable); //! false
+
+//todo:  some поверне true, якщо хоча б одного фрукту буде більше 0 штук:
+const anyAvailable = fruits.some(fruits => fruits.amount > 0);
+console.log("anyAvailable:", anyAvailable); //! true
+console.log("-----------------------------------------------------------------------------------------");
+
+
+
+//! 1.Метод reduce()
+console.warn("Синтаксис методу reduce():");
+//? ✴️ Метод reduce(callback, initialValue)
+//? використовується для послідовної обробки кожного елемента масиву
+//? із збереженням проміжного результату, як акумулятор.
+//? Трохи складніший за інші методи для засвоєння,
+//? але результат вартий того.
+//? 🔸 Поелементо перебирає оригінальний масив.
+//? 🔸 Не змінює оригінальний масив.
+//? 🔸 Робить все, що завгодно.
+//? 🔸 Повертає що завгодно.
+//? ✳️ Аргументи колбек-функції - це:
+//? 🔹 Перший параметр колбек-функції
+//?    (previousValue) - це акумулятор, тобто проміжний результат.
+//?    Значення, яке поверне колбек-функція на поточній ітерації,
+//?    буде значенням цього параметра на наступній ітерації.
+//? 🔹 наступний - значення поточного елемента element,
+//? 🔹 його індекс index
+//? 🔹 і власне вихідний масив array.
+//? 🔹 Другий аргумент - необов'язкове початкове значення акумулятора
+//?    - параметр initialValue.
+console.log(
+    `%c
+    масив.reduce((previousValue, element, index, array) => {3
+        // тіло колбек-функції
+    }, initialValue);
+    `,
+    'color: blue; font-size: 18px',
+);
+
+console.warn("Приклад використання метода reduce():");
+//? ✳️ Найлегше уявити його роботу метода reduce()
+//? на прикладі підрахунку суми елементів масиву.
+//? ✳️ Спочатку метод reduce()
+//? створює внутрішню змінну-акумулятор (previousValue)
+//? і присвоює їй значення параметра initialValue
+//? або першого елемента масиву, що перебирається,
+//? якщо initialValue не задане.
+//? 🔹 previousValue = initialValue = 0; (або previousValue = array(0) = 2).
+//? Потім колбек - функція викликається для кожного елемента масиву.
+//? Поточне значення параметра previousValue
+//? - це те, що повернула колбек - функція на минулій ітерації.
+//?     🔹 Ітерація 1 -> previousValue = 0 -> number = 2 -> return 0 + 2 -> return 2
+//?     🔹 Ітерація 2 -> previousValue = 2 -> number = 7 -> return 2 + 7 -> return 9
+//?     🔹 Ітерація 3 -> previousValue = 9 -> number = 3 -> return 9 + 3 -> return 12
+//?     🔹 Ітерація 4 -> previousValue = 12 -> number = 14 -> return 12 + 14 -> return 26
+//?     🔹 Ітерація 5 -> previousValue = 26 -> number = 6 -> return 26 + 6 -> return 32
+//? Після завершення перебирання всього масиву, метод reduce() повертає значення акумулятора.
+//?       Результат = 32
+const array = [2, 7, 3, 14, 6];
+console.log("array:", array);
+console.log("`  `  `  `  `  `  `  `  `  `  `  `  `  `  `  `  `  `  `  `")
+
+//! Варіант OlD
+// let total = 0;
+// for (const value of array) {
+//     total += value
+// }
+
+//! Варіант NEW
+const total = array.reduce((previousValue, number, index) => {
+    console.log(`Iteration-${index + 1}:  previousValue: ${previousValue},  number: ${number}  ->  return ${previousValue + number}`);
+    return previousValue + number;
+}, 0);
+
+console.log("total:", total); //! 32
+//? ✳️ Тобто метод reduce() використовується,
+//? коли необхідно взяти «багато» і привести до «одного».
+//? У повсякденних завданнях його застосування зводиться до роботи з числами.
+console.log(". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .");
+
+
+
+//? ❗️❗️❗️ Важливий приклад вірного використання синтаксису метода reduce():
+console.warn("Приклад-1: ВІРНЄ використання синтаксису метода reduce():");
+//todo var.1
+function example1(arr) {
+    arr.reduce((acc, element, index) => {
+        console.log(`Acc: ${acc}; Index-${index}:  Element: ${element}`);
+    }, undefined);
+}
+example1(["Робітник1", "Робітник2", "Робітник3"]);
+console.log(". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .");
+
+
+console.warn("Приклад-2: ПОМИЛКОВЕ використання синтаксису метода reduce():");
+//todo var.2 
+function example2(arr) {
+    arr.reduce((element, index) => {
+        console.log(`Index-${index}:  Element: ${element}`); //todo var.2
+    }, undefined);
+};
+example2(["Робітник1", "Робітник2", "Робітник3"]);
+console.log("-------------------------------------------------------------");
+
+
+//! Масив об'єктів
+console.warn("Масив об'єктів:");
+//? ✳️ Під час роботи з масивом об'єктів
+//? виконується редукування (змінювання в бік зменшення)
+//? за значенням певної властивості.
+//? Наприклад, у нас є масив студентів з балами за тест.
+//? Необхідно отримати середній бал.
+const students22 = [
+    { name: "Манго", score: 83 },
+    { name: "Полі", score: 59 },
+    { name: "Аякс", score: 37 },
+    { name: "Ківі", score: 94 },
+    { name: "Х'юстон", score: 64 },
+];
+console.log("students:", students22);
+console.log("`  `  `  `  `  `  `  `  `  `  `  `  `  `  `");
+
+
+//todo: Назва акумулятора може бути довільною, це просто параметр функції
+const totalScore = students22.reduce((total, student) => {
+    return total + student.score;
+}, 0);
+console.log("totalScore:", totalScore); //! 337
+
+const averageScore = totalScore / students22.length; //! 67.4
+console.log("averageScore:", averageScore);
+console.log("-------------------------------------------------------------");
+
+
+
+const totalPricePlane = aircrafts.reduce((total, element) => {
+    console.log(element)
+    return total + element.info.price;
+}, 0);
+
+console.log("totalPricePlane:", totalPricePlane)
+
+const averageScorePlane = totalPricePlane / aircrafts.length
+console.log("averageScorePlane:", averageScorePlane);
+
+
+// порахувати загальну вартість літаків випущених в 21 столітті
+
+// 1. перебрати масив об'єктів та створити новий масив всіх літаків випущених після 2000 року включно
+
+const arrayPlaneMore2000 = aircrafts.filter(element => element.info.year >= 2000)
+console.log("arrayPlaneMore2000:", arrayPlaneMore2000)
+
+const arrayPlaneYears = aircrafts.map(element => element.info.year)
+console.log("arrayPlaneYears:", arrayPlaneYears)
+
+
+// 2. взяти вже новий створений масив об'єктів та порахувати загальну вартість літаків
+// let resultPlaneMore200 = 0
+
+// const totalPlaneMore2000 = arrayPlaneMore2000.reduce((acc, element) => {
+//     console.log(element)
+//     // resultPlaneMore200 = acc + element.info.price
+//     // return resultPlaneMore200
+//     return acc + element.info.price
+// }, 0);
+
+const totalPlaneMore2000 = arrayPlaneMore2000.reduce((acc, element) => acc + element.info.price, 0)
+console.log("totalPlaneMore2000:", totalPlaneMore2000)
+// console.log("resultPlaneMore200:", resultPlaneMore200)
+
+
+
+//! Просунутий reduce (масив усіх тегів)
+console.warn("Просунутий reduce (масив усіх тегів):");
+//? ✳️ Продовжуючи тему reduce, 
+//? ми зберемо в масив усі теги, 
+//? які зустрічаються в постах.
+const tweets2 = [
+    { id: "000", likes: 5, tags: ["js", "nodejs"] },
+    { id: "001", likes: 2, tags: ["html", "css"] },
+    { id: "002", likes: 17, tags: ["html", "js", "nodejs"] },
+    { id: "003", likes: 8, tags: ["css", "react"] },
+    { id: "004", likes: 0, tags: ["js", "nodejs", "react"] },
+];
+console.log("tweets2:", tweets2);
+console.log("`  `  `  `  `  `  `  `  `  `  `  `  `  `  `")
+
+//todo: Пройдемо по всіх елементах колекції і додамо значення властивості tags
+//todo: до акумулятора, початкове значення якого вкажемо порожнім масивом [].
+//todo: На кожній ітерації пушимо в акумулятор усі елементи tweet.tags і повертаємо його.
+const tags2 = tweets2.reduce((allTags, tweet) => {
+    allTags.push(...tweet.tags);
+    return allTags;
+}, []);
+
+console.log("tags2:", tags2); //! ['js', 'nodejs', 'html', 'css', 'html', 'js', 'nodejs', 'css', 'react', 'js', 'nodejs', 'react']
+
+//todo: Мабуть, збирання тегів - не одиночна операція, тому напишемо функцію
+//todo: для збирання тегів з колекції
+const getTags2 = arr =>
+    arr.reduce((allTags, tweet) => {
+        allTags.push(...tweet.tags);
+        return allTags;
+    }, []);
+
+console.log("Tags-2 with countLikes:", getTags2(tweets2)); //! ['js', 'nodejs', 'html', 'css', 'html', 'js', 'nodejs', 'css', 'react', 'js', 'nodejs', 'react']
+console.log("-------------------------------------------------------------");
+
+// створити ноивй масив значень (із назвою всіх країн виробників літаків)
+//  використовуючи метод reduce та синтаксис function declaration
+
+
+
+const getCountries = arr =>
+    arr.reduce((acc, el) => {
+        // console.log("acc:", acc)
+        // console.log("el:", el)
+        // console.log(":",)
+        acc.push(...el.info.countries);
+        return acc;
+    }, []);
+
+console.log("getCountries:", getCountries(aircrafts));
+
+
+// const uniqueArrayCourses = arrayCountries.filter(
+//     (country, index, array) => array.indexOf(country) === index
+// );
+
+// console.log("uniqueArrayCourses:", uniqueArrayCourses)
+
+
+const uniqueArrayCountries = getCountries(aircrafts).filter(
+    (country, index, array) => array.indexOf(country) === index
+);
+
+console.log("uniqueArrayCountries:", uniqueArrayCountries)
+
+
+//! Просунутий reduce (об'єкт унікальних тегів)
+console.warn("Просунутий reduce (об'єкт унікальних  тегів):");
+//? ✳️ Продовжуючи тему reduce, 
+//? ми зберемо в масив усі теги, 
+//? які зустрічаються в постах.
+const tweets3 = [
+    { id: "000", likes: 5, tags: ["js", "nodejs"] },
+    { id: "001", likes: 2, tags: ["html", "css"] },
+    { id: "002", likes: 17, tags: ["html", "js", "nodejs"] },
+    { id: "003", likes: 8, tags: ["css", "react"] },
+    { id: "004", likes: 0, tags: ["js", "nodejs", "react"] },
+];
+console.log("tweets3:", tweets3);
+console.log("`  `  `  `  `  `  `  `  `  `  `  `  `  `  `");
+
+const getTags3 = tweets =>
+    tweets.reduce((allTags, tweet) => {
+        allTags.push(...tweet.tags);
+        return allTags;
+    }, []);
+
+const tags3 = getTags3(tweets3);
+console.log("Tags-3 with countLikes:", tags3); //! ['js', 'nodejs', 'html', 'css', 'html', 'js', 'nodejs', 'css', 'react', 'js', 'nodejs', 'react']
+
+//todo: Винесемо callback-функцію окремо, а в reducе передамо посилання на неї.
+//todo: Це стандартна практика, якщо callback-функція досить велика.
+
+//todo: Якщо в об'єкті-акумуляторі acc відсутня своя властивість з ключем tag,
+//todo: то створюємо її і записуємо їй значення 0.
+//todo: В іншому випадку збільшуємо значення на 1.
+// const getTagStats = (acc, tag) => {
+//     if (!acc.hasOwnProperty(tag)) {
+//         acc[tag] = 0;
+//     };
+//     acc[tag] += 1;
+//     return acc;
+// };
+
+//todo: Початкове значення акумулятора - це порожній об'єкт {}
+// const countTags = tags => tags.reduce(getTagStats, {});
+const countTags = tags =>
+    tags.reduce((acc, tag) => {
+        console.log("acc:", acc);
+        console.log("tag:", tag);
+        console.log("!acc.hasOwnProperty(tag):", !acc.hasOwnProperty(tag));
+        if (!acc.hasOwnProperty(tag)) {
+            acc[tag] = 0;
+        };
+        acc[tag] += 1;
+        console.log("acc[tag]:", acc[tag]);
+        console.log("_____________________________________________________");
+        return acc;
+    }, {});
+
+const tagCount = countTags(tags3);
+console.log("tagCount:", tagCount); //! {js: 3, nodejs: 3, html: 2, css: 2, react: 2}
+console.log("-------------------------------------------------------------");
+
+
+const allCountries = getCountries(aircrafts);
+console.log("allCountries:", allCountries)
+
+const countCountries = countries =>
+    countries.reduce((acc, country) => {
+        if (!acc.hasOwnProperty(country)) {
+            acc[country] = 0
+        };
+        acc[country] += 1
+        return acc
+    }, {});
+
+console.log("countCountries", countCountries(allCountries))
+    
+
+
+//! Метод sort()
+console.warn("Синтаксис методу sort():");
+//? ✴️ Метод sort() сортує елементи масиву,
+//? але на відміну від інших методів перебирання,
+//? він сортує вихідний масив.
+//? 🔸 Поелементо перебирає оригінальний масив.
+//? 🔸 Сортує і змінює вихідний (оригінальний) масив.
+//? 🔸 Повертає змінений масив, тобто посилання на відсортований вихідний (оригінальний) масив.
+//? 🔸 За замовчуванням сортує за зростанням.❗️
+//? 🔸 Сортування відбувається шляхом приведення значень
+//?    до рядка і порівняння порядкових номерів у таблиці Unicode.
+console.log(
+    `%c
+    массив.sort();
+    `,
+    'color: blue; font-size: 18px',
+);
+
+
+console.warn("Приклад використання метода sort():");
+//? ✳️ Такий масив чисел буде відсортований за зростанням:
+const scores1 = [61, 19, 74, 35, 92, 56];
+console.log("scores1_before:", scores1); //! [61, 19, 74, 35, 92, 56]
+scores1.sort();
+console.log("scores1_after:", scores1); //! [19, 35, 56, 61, 74, 92]
+console.log(". . . . . . . . . . . . . . . . . . . . . . . . . . . . .");
+
+// відсортувати мисив aircrafts за роком випуску
+
+// 1 створюємо мисив років
+// 2 сортуємо мисив років 
+// 3 з відсортованого мисиву років створюємо масив об'єктів 
+
+console.log("aircrafts-before:", aircrafts)
+
+const sortAircrafts = aircrafts.sort()
+
+console.log("aircrafts-after:", sortAircrafts)
