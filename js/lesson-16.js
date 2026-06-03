@@ -1422,7 +1422,7 @@ console.log("arrayCountries:", arrayCountries)
 
 
 
-const uniqueArrayCourses = arrayCountries.filter(
+const uniqueArrayCourses = arrayCountries .filter(
     (country, index, array) => array.indexOf(country) === index
 );
 
@@ -1890,12 +1890,324 @@ console.log(". . . . . . . . . . . . . . . . . . . . . . . . . . . . .");
 
 // відсортувати мисив aircrafts за роком випуску
 
-// 1 створюємо мисив років
-// 2 сортуємо мисив років 
-// 3 з відсортованого мисиву років створюємо масив об'єктів 
+// console.log("aircrafts-before:", aircrafts)
+// // 1 створюємо мисив років
 
+// const arrayYearPlanes = aircrafts.map(element => element.info.year)
+
+// console.log("arrayYearPlanes-before:", arrayYearPlanes)
+// // 2 сортуємо мисив років
+// const sortAircrafts = arrayYearPlanes.sort()
+
+// console.log("sortAircrafts", sortAircrafts)
+// console.log("arrayYearPlanes-after:", arrayYearPlanes)
+
+// // 3 з відсортованого мисиву років створюємо масив об'єктів
+
+// const sortedPlanesObjects = sortAircrafts.map(year =>
+//     aircrafts.find(element => element.info.year === year)
+// );
+
+// console.log("sortedPlanesObjects:", sortedPlanesObjects)
+// console.log("aircrafts-after:", sortAircrafts)
+
+// загальна кількість ітерацій методу find() = 1+2+3+4+5+6+7+8+9+10 = 55 
+
+
+// 2 Варіант
+
+const sortedAircrafts = aircrafts.sort(
+    (a, b) => a.info.year - b.info.year
+);
+
+console.log(sortedAircrafts);
+
+
+
+//? ✳️ Але, оскільки за замовчуванням значення приводяться до рядка,
+//? стандартне сортування чисел працює незвично.
+const scores2 = [27, 2, 41, 4, 7, 3, 75];
+console.log("scores2_before:", scores2); //! [27, 2, 41, 4, 7, 3, 75]
+scores2.sort();
+console.log("scores2_after:", scores2); //! [2, 27, 3, 4, 41, 7, 75]
+
+
+//? ✳️ Тому, у наступній вправі ми розглянемо як задавати свій порядок сортування.
+//? ✳️ Для прикладу, відсортуємо масив рядків за алфавітом:
+const students11 = ["Віка", "Андрій", "Олег", "Юля", "Борис", "Катя"];
+console.log("students11_before:", students11); //! ['Віка', 'Андрій', 'Олег', 'Юля', 'Борис', 'Катя']
+students11.sort();
+console.log("students11_after:", students11); //! ['Андрій', 'Борис', 'Віка', 'Катя', 'Олег', 'Юля']
+console.log(". . . . . . . . . . . . . . . . . . . . . . . . . . . . .");
+
+const students222 = ["Віка", "андрій", "Олег", "юля", "Борис", "катя"];
+console.log("students222-before:", students222); //! ['Віка', 'андрій', 'Олег', 'юля', 'Борис', 'катя']
+
+students222.sort();
+console.log("students222-after:", students222); //! ['Борис', 'Віка', 'Олег', 'андрій', 'катя', 'юля']
+
+
+
+//? ✴️ Через те, що сортується вихідний масив, 
+//? порушується принцип чистоти функцій 
+//? і не можна зручно створити декілька похідних колекцій 
+//? на основі вихідної. 
+//? Наприклад, створити колекцію, відсортовану за зростанням, 
+//? а іншу - за спаданням. 
+//? Тому перед сортуванням роблять 
+//? повну копію вихідного масиву і сортують вже її.
+const scores3 = [61, 19, 74, 35, 92, 56];
+const ascendingScores3 = [...scores3].sort();
+
+console.log("scores3:", scores3); //! [61, 19, 74, 35, 92, 56]
+console.log("ascendingScores3:", ascendingScores3);  //! [19, 35, 56, 61, 74, 92]
+console.log("-------------------------------------------------------------------------------");
+
+
+
+//! Свій порядок сортування чисел
+console.warn("Свій порядок сортування чисел:");
+//? ✳️ Для зазначення свого порядку сортування методу sort(compareFunction)
+//? потрібно передати колбек-функцію з двома параметрами.
+//? Це функція порівняння (compare function),
+//? порядок сортування залежить від її результату.
+//? Метод sort() буде викликати її для двох довільних елементів.
+console.log(
+    `%c
+    массив.sort((a, b) => {
+        // тіло колбек-функції
+    });
+    `,
+    'color: blue; font-size: 18px',
+);
+//? 🔸 a - перший елемент для порівняння.
+//? 🔸 b - другий елемент для порівняння.
+//? ✴️ Якщо виклик compareFunction(a, b)
+//? повертає будь-яке від'ємне значення,
+//? тобто a менше b,
+//? сортування поставить a перед b.
+//? Це сортування за зростанням.
+//? ✳️ Якщо виклик compareFunction(a, b) поверне 0, 
+//? сортування залишить a і b незмінними 
+//? по відношенню один до одного, 
+//? але відсортує їх по відношенню до всіх інших елементів. 
+//? Але взагалі неважливо, що повертати, 
+//? якщо їх взаємний порядок не має значення.
+const scores4 = [27, 2, 41, 4, 7, 3, 75];
+const ascendingScores4Old = [...scores4].sort();
+const ascendingScores4New = [...scores4].sort((a, b) => a - b);
+const descentingScores4New = [...scores4].sort((a, b) => b - a);
+// const scoreLocaleCompareNumber = [...scores4].sort((a, b) => a.localeCompare(b)); //! так не працює
+
+console.log("scores4:", scores4); //! [27, 2, 41, 4, 7, 3, 75]
+console.log("ascendingScores4Old:", ascendingScores4Old);  //! [2, 27, 3, 4, 41, 7, 75]
+console.log("ascendingScores4New:", ascendingScores4New);  //! [2, 3, 4, 7, 27, 41, 75]
+console.log("descentingScores4New:", descentingScores4New);  //! [75, 41, 27, 7, 4, 3, 2]
+
+
+
+
+//! Свій порядок сортування рядків
+console.warn("Свій порядок сортування рядків:");
+//? ✴️ Для сортування рядків в алфавітному порядку, 
+//? за зростанням або спаданням, 
+//? використовується метод рядків localeCompare().
+console.log(
+    `%c
+    firstString.localeCompare(secondString)
+    `,
+    'color: blue; font-size: 18px',
+);
+console.log("-------------------------------------------------------------------------------");
+
+//? ✳️ Він викликається на рядку,
+//? який потрібно порівняти (firstString) з тим,
+//? що був переданий йому як аргумент (secondString).
+console.log('"a".localeCompare("b"):', "a".localeCompare("b")); //! -1
+console.log('"b".localeCompare("a"):', "b".localeCompare("a")); //! 1
+console.log('"a".localeCompare("a"):', "a".localeCompare("a")); //! 0
+console.log('"b".localeCompare("b"):', "b".localeCompare("b")); //! 0
+//? 🔸 Повертає від'ємне значення, якщо firstString повинен бути перед secondString.
+//? 🔸 Повертає додатне значення більше нуля, якщо firstString повинен бути після secondString.
+//? 🔸 Якщо рядки однакові, повертається нуль.
+console.log("-------------------------------------------------------------------------------");
+
+//? ✳️ Це зручно використовувати для сортування рядків,
+//? оскільки метод sort() очікує такі самі значення від колбек-функції.
+const students223 = ["Віка", "андрій", "Олег", "юля", "Борис", "катя"];
+console.log("students2:", students2); //! ['Віка', 'андрій', 'Олег', 'юля', 'Борис', 'катя']
+
+const inAlphabetOrder2Old = [...students223].sort();
+console.log("inAlphabetOrder2Old:", inAlphabetOrder2Old); //! ['Борис', 'Віка', 'Олег', 'андрій', 'катя', 'юля']
+
+const inAlphabetOrder2New = [...students223].sort((a, b) => a.localeCompare(b));
+console.log("inAlphabetOrder2New:", inAlphabetOrder2New); //! ['андрій', 'Борис', 'Віка', 'катя', 'Олег', 'юля']
+
+const inReversedOrder2New = [...students223].sort((a, b) => b.localeCompare(a));
+console.log("inReversedOrder2New:", inReversedOrder2New); //! ['юля', 'Олег', 'катя', 'Віка', 'Борис', 'андрій']
+
+
+// зробити сортування за зростанням за полем brief
 console.log("aircrafts-before:", aircrafts)
+const aircraftSortByName= [...aircrafts].sort((a, b) => a.name.brief.localeCompare(b.name.brief))
+console.log("aircrafts-after:", aircrafts)
+console.log("aircraftSortByName:", aircraftSortByName)
 
-const sortAircrafts = aircrafts.sort()
 
-console.log("aircrafts-after:", sortAircrafts)
+//! Сортування об'єктів
+console.warn("Сортування об'єктів:");
+//? ✴️ Під час роботи з масивом об'єктів, 
+//? сортування виконується за числовим 
+//? або рядковим значенням певної властивості. 
+//? Наприклад, у нас є група студентів з балами за тест. 
+//? Необхідно відсортувати масив об'єктів за зростанням 
+//? і спаданням кількості балів, і за ім'ям студента.
+const students3 = [
+    { name: "Манго", score: 83 },
+    { name: "Полі", score: 59 },
+    { name: "Аякс", score: 37 },
+    { name: "Ківі", score: 94 },
+];
+console.log("students3:", students3);
+console.log("`  `  `  `  `  `  `  `  `  `  `  `  `  `  `  `  `  `  `");
+
+// const inAscendingScoreOrder = students3.sort(
+//     (firstStudent, secondStudent) => firstStudent.score - secondStudent.score
+// );
+// console.log("inAscendingScoreOrder:", inAscendingScoreOrder); //! 
+
+// const inDescendingScoreOrder = students3.sort(
+//     (firstStudent, secondStudent) => secondStudent.score - firstStudent.score
+// );
+// console.log("inDescendingScoreOrder:", inDescendingScoreOrder); //!
+
+const inAlphabeticalOrder = students3.sort((firstStudent, secondStudent) =>
+    firstStudent.name.localeCompare(secondStudent.name)
+);
+console.log("inAlphabeticalOrder:", inAlphabeticalOrder); //! 
+console.log("-------------------------------------------------------------------------------");
+
+
+
+//! Метод toSorted()
+console.warn("Синтаксис методу toSorted():");
+//? ✴️ Метод toSorted() працює також як метод sort(),
+//? але на відміну від метод sort()
+//? він НЕ змінює вихідний (оригінальний) масив,
+//? 🔸 Поелементо перебирає оригінальний масив.
+//? 🔸 Не змінює оригінальний масив.
+//? 🔸 Повертає НОВИЙ відсортований масив.
+//? 🔸 За замовчуванням сортує за зростанням.❗️
+//? 🔸 Сортування відбувається шляхом приведення значень
+//?    до рядка і порівняння порядкових номерів у таблиці Unicode.
+console.log(
+    `%c
+    массив.toSorted();
+    `,
+    'color: blue; font-size: 18px',
+);
+console.log(
+    `%c
+    массив.toSorted((a, b) => {
+        // тіло колбек-функції
+    });
+    `,
+    'color: blue; font-size: 18px',
+);
+//? 🔸 a - перший елемент для порівняння.
+//? 🔸 b - другий елемент для порівняння.
+//? ✴️ Якщо виклик compareFunction(a, b)
+//? повертає будь-яке від'ємне значення,
+//? тобто a менше b,
+//? сортування поставить a перед b.
+//? Це сортування за зростанням.
+//? ✳️ Якщо виклик compareFunction(a, b) поверне 0, 
+//? сортування залишить a і b незмінними 
+//? по відношенню один до одного, 
+//? але відсортує їх по відношенню до всіх інших елементів. 
+//? Але взагалі неважливо, що повертати, 
+//? якщо їх взаємний порядок не має значення.
+const scores5 = [27, 2, 41, 4, 7, 3, 75];
+console.log("scores5_before:", scores5); //! [27, 2, 41, 4, 7, 3, 75]
+console.log("`  `  `  `  `  `  `  `  `  `  `  `  `  `  `  `  `");
+
+const ascendingScores5 = scores5.toSorted((a, b) => a - b);
+const descentingScores5 = scores5.toSorted((a, b) => b - a);
+
+console.log("ascendingScores5:", ascendingScores5);  //! [2, 3, 4, 7, 27, 41, 75]
+console.log("descentingScores5:", descentingScores5);  //! [75, 41, 27, 7, 4, 3, 2]
+
+console.log("`  `  `  `  `  `  `  `  `  `  `  `  `  `  `  `  `");
+console.log("scores5_after:", scores5); //! [27, 2, 41, 4, 7, 3, 75]
+console.log("-------------------------------------------------------------------------------");
+
+const aircraftsSortedByPrice = aircrafts.toSorted((a, b) => a.info.price - b.info.price);
+console.log("aircraftsSortedByPrice:", aircraftsSortedByPrice)
+const arrayPricePlane = aircraftsSortedByPrice.map(element => element.info.price)
+console.log("arrayPricePlane:", arrayPricePlane)
+
+
+
+//! 3.Ланцюжки методів
+//? ✳️ У нас є масив об'єктів з іменами, балами і відвідуваними предметами кожного студента.
+const students221 = [
+    { name: "Манго", score: 83, courses: ["математика", "фізика"] },
+    { name: "Полі", score: 59, courses: ["інформатика", "математика"] },
+    { name: "Аякс", score: 37, courses: ["фізика", "біологія"] },
+    { name: "Ківі", score: 94, courses: ["література", "інформатика"] },
+];
+
+//? ✳️ Необхідно отримати масив їхніх імен,
+//? відсортованих за зростанням балів за тест.
+//? З цією метою ми відсортуємо копію масиву методом sort(),
+//? після чого методом map() створимо масив значень властивості name
+//? з відсортованого масиву.
+const sortedByAscendingScore = [...students221].sort((a, b) => a.score - b.score);
+const names1 = sortedByAscendingScore.map(student => student.name);
+
+console.log("names1:", names1); //! ['Аякс', 'Полі', 'Манго', 'Ківі']
+console.log(". . . . . . . . . . . . . . . . . . . . . . . . . . .");
+
+//? ✳️ Проблема в тому, що у нас з'являються проміжні змінні
+//? після кожної операції, крім фінальної.
+//? Змінна sortedByAscendingScore - зайва
+//? і необхідна тільки для зберігання проміжного результату.
+//? ✳️ Позбутися таких «мертвих» змінних можна
+//? за допомогою групування викликів методів у ланцюжку.
+//? Кожний наступний метод буде виконуватися
+//? на основі результату роботи попереднього.
+//? 🔸 Робимо копію вихідного масиву перед сортуванням.
+//? 🔸 На копії викликаємо метод sort().
+//? 🔸 До результату роботи методу sort() застосовуємо метод map().
+//? 🔸 Змінній names присвоюється результат роботи методу map().
+
+const names2 = [...students221]
+    .sort((a, b) => a.score - b.score)
+    .map(student => student.name);
+
+console.log("names2:", names2); //! ['Аякс', 'Полі', 'Манго', 'Ківі']
+console.log(". . . . . . . . . . . . . . . . . . . . . . . . . . .");
+
+//? ✳️ Отримаємо масив унікальних відвідуваних предметів, відсортований за алфавітом.
+//? 🔸 На вихідному масиві викликаємо flatMap() і робимо розгладжений масив усіх курсів.
+//? 🔸 До результату методу flatMap() застосовуємо метод filter() для фільтрації унікальних елементів.
+//? 🔸 На результаті методу filter() викликаємо sort().
+//? 🔸 Змінній uniqueSortedCourses присвоюється результат роботи методу sort().
+const uniqueSortedCourses = students221
+    .flatMap(student => student.courses)
+    .filter((course, index, array) => array.indexOf(course) === index)
+    .sort((a, b) => a.localeCompare(b));
+
+console.log("uniqueSortedCourses:", uniqueSortedCourses);  //! ['біологія', 'інформатика', 'література', 'математика', 'фізика']
+console.log("----------------------------------------------------------------------------------------------");
+
+
+// створити масив ціни літаків відсортований за зростанням
+
+const arrayPricePlane2 = aircrafts
+    .toSorted((a, b) => a.info.price - b.info.price)
+    .map(element => element.info.price); 
+
+console.log("arrayPricePlane2:", arrayPricePlane2)
+
+// ДЗ передивитися всі приклади із літаками і використати в рішеннях цих задач лянцюжки методів
