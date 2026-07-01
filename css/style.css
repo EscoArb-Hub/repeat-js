@@ -51,3 +51,8 @@ h4 {
 h4 {
     color: blue;
 }
+
+
+.hidden{
+    display: none;
+}

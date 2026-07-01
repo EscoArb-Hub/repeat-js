@@ -200,13 +200,118 @@ console.log(". . . . . . . . . . . . . . . . . . . . . . . . . . .");
 const parent = document.querySelector(".box");
 console.log("parent:", parent);
 
+// const button12 = document.querySelector(".button12")
+// console.log("button12:", button12)
+
 const handleClick3 = event => {
     console.log(". . . . . . . . . . . . . . . . . . . . . . . . . . .");
     // console.log("event: ", event);
     console.log("event type(parent): ", event.type);
     console.log("event target(parent): ", event.target);
     console.log("event currentTarget(parent): ", event.currentTarget);
+    if (event.target === event.currentTarget) {
+        // button12.style.display = "none"
+        button12.classList.toggle("hidden")
+    }
 };
 
 parent.addEventListener("click", handleClick3); //! event.target може не співпадати з event.currentTarget
 console.log("-----------------------------------------------------");
+
+
+//  доповнити код такою логікою
+// якщо click відбувається на батьківському елементі то button-2 зникає з розмітки
+
+
+
+//! Дії браузера за замовчуванням
+console.warn("Дії браузера за замовчуванням:");
+//? ✴️ Деякі події викликають дію браузера,
+//? вбудовану за замовчуванням як реакція на певний тип події.
+//? Наприклад, клік на посиланні
+//? ініціює перехід на нову адресу, зазначену в href,
+//? а відправлення форми перезавантажує сторінку.
+//? Найчастіше ця поведінка небажана і її необхідно скасувати.
+//? ✴️ Для скасування дії браузера за замовчуванням
+//? в об'єкта події є стандартний метод ❗️preventDefault()❗️.
+console.log(
+    `%c
+    🔸 event.preventDefault()
+    `,
+    'color: blue; font-size: 16px',
+);
+console.log(". . . . . . . . . . . . . . . . . . . .");
+
+
+
+//! Подія submit
+console.warn("Дії браузера за замовчуванням:");
+//? ✴️ Виникає при відправці форми.
+//? Його застосовують для валідації (перевірки)
+//? форми перед відправкою.
+//? Щоб відправити форму, у відвідувача є два способи:
+//? 🔸 Натиснути кнопку з type =" submit "
+//? 🔸 Натиснути кнопку Enter, перебуваючи в якомусь полі форми
+//? ✴️ Який би спосіб не вибрав відвідувач 
+//? - буде згенеровано подія submit. 
+//? В обробнику цієї події можна перевірити дані, 
+//? і виконати дії по результатах перевірки.
+const form = document.querySelector(".register-form");
+
+form.addEventListener(
+    "submit",
+    (event) => {
+        event.preventDefault(); //todo: ❗️скасовує перезавантаження сторінки❗️
+
+        const {
+            elements: { username, password }
+        } = event.currentTarget;
+
+        console.log("Username:", username.value);
+        console.log("Password:", password.value);
+    }
+);
+console.log("---------------------------------------");
+
+
+
+//! Подія submit​
+console.warn("Подія submit​:");
+//? ✴️ Відправлення форми відбувається під час кліку
+//? по кнопці з атрибутом type="submit"
+//? або натискання клавіші Enter,
+//? перебуваючи в будь-якому її текстовому полі.
+//? ✴️ Подію submit можна застосувати для
+//? валідації (перевірки) форми перед відправленням,
+//? оскільки на об'єкті події існує багато
+//? корисних властивостей,
+//? пов'язаних з елементами форми.
+//? ✴️ Сабміт форми ❗️перезавантажує сторінку❗️,
+//? тому не забувайте скасовувати
+//? дію за замовчуванням методом ❗️preventDefault()❗️.
+//?❗️ ✴️ Властивість elements DOM-елемента форми 
+//?❗️ містить об'єкт з посиланнями на усі її елементи, 
+//?❗️ які мають атрибут name. 
+//?❗️ Тому в прикладі ми отримуємо значення полів, 
+//?❗️ звертаючись до login.value і password.value.
+const registerForm = document.querySelector(".form");
+console.log("registerForm:", registerForm);
+
+registerForm.addEventListener("submit", handleSubmit);
+
+function handleSubmit(event) {
+    event.preventDefault(); //todo: ❗️скасовує перезавантаження сторінки❗️
+    console.log("event.currentTarget:", event.currentTarget);
+    const form = event.target;
+    console.log("form = event.target:", form);
+    const login = form.elements.login.value;
+    const password = form.elements.password.value;
+
+    if (login === "" || password === "") {
+        return console.log("❗️❗️❗️ Please fill in all the fields!");
+    }
+
+    console.log(`Login: ${login}, Password: ${password}`);
+    form.reset();
+};
+console.log("-------------------------------------------------------------------------------------------------------------");
