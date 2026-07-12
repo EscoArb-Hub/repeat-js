@@ -56,3 +56,19 @@ h4 {
 .hidden{
     display: none;
 }
+
+.aircrsfts-list{
+    width: 850px;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 25px;
+    gap: 20px;
+    outline: red 1px solid;
+}
+.aircrafts-item{
+        outline: blue 1px solid;
+}
+.aircrafts-img,
+.find-img{
+    width: 400px;
+}
